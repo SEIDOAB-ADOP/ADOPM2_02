@@ -16,11 +16,11 @@ namespace ADOPM2_02_08
         }
 
         #region Implementation of IEquatable<T> interface
-        public bool Equals(Car car) => (this.Make, this.Model) == (car.Make, car.Model);
+        public bool Equals(Car car) => (this.Make, this.Model, this.Year) == (car.Make, car.Model, car.Year);
 
         //Needed to implement as part of IEquatable
         public override bool Equals(object obj) => Equals(obj as Car);
-        public override int GetHashCode() => (Make, Model).GetHashCode();
+        public override int GetHashCode() => (Make, Model, Year).GetHashCode();
         #endregion
 
         #region operator overloading
@@ -33,13 +33,14 @@ namespace ADOPM2_02_08
         {
             //Sort on Make -> Model -> Year
             if (Make != other.Make)
-                return Make.CompareTo(other.Make);          
+                return Make.CompareTo(other.Make);
             else if (Model != other.Model)
                 return Model.CompareTo(other.Model);
             else
                 return Year.CompareTo(other.Year);
         }
         #endregion
+
 
         public Car() { }
         public Car (Car org)
@@ -119,7 +120,6 @@ namespace ADOPM2_02_08
             {
                 Console.WriteLine(item);
             }
-
         }
     }
 
