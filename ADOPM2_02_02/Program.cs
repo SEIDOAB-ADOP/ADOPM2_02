@@ -18,9 +18,9 @@ namespace ADOPM2_02_02
 			{ 
 				(Width, Height) = (width, height);
 			}
-			public immutableRectangleStruct GetQuad()
+			public immutableRectangleStruct SetWidth(double Width)
 			{
-				var result = new immutableRectangleStruct { Height = 2 * this.Height, Width = 2 * this.Width };
+				var result = new immutableRectangleStruct { Height = this.Height, Width = Width  };
 				return result;
 			}
 			public void Deconstruct(out double width, out double height)
@@ -32,7 +32,7 @@ namespace ADOPM2_02_02
 
 		class immutableRectangleClass : IEquatable<immutableRectangleClass>	
 		{
-			public double Width { get; private set; }
+			public double Width { get; init; }
 			public double Height { get; init; }
 
 			public bool Equals(immutableRectangleClass other) =>
@@ -43,15 +43,14 @@ namespace ADOPM2_02_02
 			public static bool operator !=(immutableRectangleClass r1, immutableRectangleClass r2) => !Equals(r1, r2);
 			public override string ToString() => 
 				$"{nameof(immutableRectangleClass)} {{ {nameof(Width)}={Width}, {nameof(Height)}={Height} }}";
-			
-			public immutableRectangleClass SetWidth (double width)	
-			{
-				var result = new immutableRectangleClass(this);
-				result.Width = width;	
-				return result;
-			}
 
-			public immutableRectangleClass() { }
+            public immutableRectangleClass SetWidth(double Width)
+            {
+                var result = new immutableRectangleClass { Height = this.Height, Width = Width };
+                return result;
+            }
+
+            public immutableRectangleClass() { }
 			public immutableRectangleClass(double width, double height) => (Width, Height) = (width, height);
 			
 			//Copy Constructor
@@ -72,16 +71,17 @@ namespace ADOPM2_02_02
 			
 			var irs1 = new immutableRectangleStruct { Width = 400, Height = 100 };
 			var irs2 = irs1;
-			var irs3 = new immutableRectangleStruct ();
-			Console.WriteLine(irs1);
-			Console.WriteLine(irs1 == irs2);
-			Console.WriteLine(irs1 == irs3);
-			Console.WriteLine(irs1.GetQuad());
-			Console.WriteLine();
-			
+			var irs3 = irs1.SetWidth(800);
+            Console.WriteLine(irs1);
+            Console.WriteLine(irs2);
+            Console.WriteLine(irs3);
 
-			var irc1 = new immutableRectangleClass(400, 200);
-			var irc2 = new immutableRectangleClass(irc1);
+            Console.WriteLine(irs1);
+            Console.WriteLine(irs1 == irs2);
+            Console.WriteLine(irs1 == irs3);
+
+            var irc1 = new immutableRectangleClass { Width = 400, Height = 100 };
+            var irc2 = new immutableRectangleClass(irc1);
 			var irc3 = irc1.SetWidth(800);
 
             Console.WriteLine(irc1);
